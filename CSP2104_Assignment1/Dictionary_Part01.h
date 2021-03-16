@@ -150,3 +150,31 @@ void Dictionary_Part01::qButNoU() {
 	}
 	cout << endl;
 }
+
+/*
+	part 2 - 2 Palindromes
+	vector<Word> palindromes;
+	for each word in dictionary {
+		string reverse;
+		for( i=word.word.size(); i <= 0; i-- ) {
+			reverse += i;
+		}
+		if(word.getWord() == reverse) {
+			palindromes.pushBack(word)
+		}
+	}
+	
+	
+	part 2 | 3 Anagrams
+	
+	void getAnagrams(string usrWord) {
+		usrWord.sortAlphabetically() //not a real function
+		vector<Word> anagrams;
+		for each word in dictionary {
+			if word.getWord().size() == usrWord.size() {
+				string sortedWord = word.getWord().sortAlphabetically();
+				if(sortedWord == usrWord) {
+					anagrams.pushBack(word);
+		}
+	}
+*/
