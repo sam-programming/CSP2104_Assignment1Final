@@ -112,7 +112,7 @@ string Word::removeSemicolons() {
 		if (def[index + 1] == ' ' && def[index + 2] == ' ') {
 			def.erase(index + 1, 1);
 		}
-		index = def.find(";");
+		index = def.find(";"); // find the next one
 	}
 	return def;
 }
