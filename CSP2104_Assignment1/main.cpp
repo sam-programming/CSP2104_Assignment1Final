@@ -2,8 +2,11 @@
 using namespace std;
 
 int main() {
-	Dictionary_Part01 dict;
-	dict.loadDictionary("dictionary2021.txt");
+
+	Word wrd;
+	wrd.printDefinition();
+	//Use constructor to call loadDictionary on parameter filename
+	Dictionary_Part01 dict("dictionary2021.txt");
 	const char EXIT = 'x';
 	cout << "Welcome to Dictionary Part 1!\n";
 
@@ -18,11 +21,11 @@ int main() {
 		cout << "Enter " << EXIT << " to exit the program...\n";
 		cin >> response;
 		// To prevent cin buffer issues and unintentional input, take a string as cin and test it for length
-		// If the user puts a space in the input
+		// If the user puts a space in the input or it's too long, be mean to them
 		while (response.length() > 1) {
 			cout << "Invalid input.  Please enter a single value corresponding to a menu item.\n";
 			cin >> response;
-		}
+		}		
 		user_comm = tolower(response[0]);
 		cin.ignore(10000, '\n'); // this will clear the cin buffer so that the next getline will work
 

@@ -1,13 +1,18 @@
 /*  
 	Defines the Word class
 	Fields:
-		- word : String
-		- type : String
-		- definition : String
+		- word : string
+		- type : string
+		- definition : string
 	Methods:
-		+ getWord() : String
-		+ getType()
-		+ getDef() : String
+		+ Word() : constructor
+		+ Word(string, string, string) : constructor
+		+ setWord(string) : void
+		+ setType(string) : void
+		+setDef(string) : void
+		+ getWord() : string
+		+ getType() : string
+		+ getDef() : string
 		+ capitaliseProperNoun() : void
 		+ removeSemicolons() : void
 		+ printDefinition() : void
@@ -26,6 +31,9 @@ private:
 	string type;
 	string definition;
 public:
+	//constructors
+	Word();
+	Word(string, string, string);
 	//getters
 	void setWord(string);
 	void setType(string);
@@ -41,16 +49,33 @@ public:
 	void printDefinition();	
 };
 //Word implementation
-void Word::setWord(string w) {
-	word = w;
-}
-void Word::setType(string t) {
-	type = t;
-}
-void Word::setDef(string d) {
-	definition = d;
+
+//default constructor
+Word::Word() {
+	word = "default word";
+	type = "";
+	definition = "This is a default word";
 }
 
+//constructor with parameters
+Word::Word(string word, string type, string definition) {
+	this->word = word;
+	this->type = type;
+	this->definition = definition;
+}
+
+//setters
+void Word::setWord(string word) {
+	this->word = word;
+}
+void Word::setType(string type) {
+	this->type = type;
+}
+void Word::setDef(string definition) {
+	this->definition = definition;
+}
+
+//getters
 string Word::getWord() {
 	//use tolower to standardise input (proper nouns are capitalised in the dict file)
 	word[0] = tolower(word[0]);
@@ -91,12 +116,13 @@ string Word::getDef() {
 	return definition;
 }
 
+//auxiliary functions
 string Word::capitaliseProperNoun() {
 	string word = getWord();
 	string type = "Proper Noun (pn.)";
 	if (getType() == type) { // if word type is proper noun
 		for (int i = 0; i < word.size(); i++) { // loop word.size() amount of times
-			word[i] = toupper(word[i]); //capitalise
+			word[i] = toupper(word[i]); //capitalise first letter
 		}
 	}
 	return word;
@@ -110,6 +136,9 @@ string Word::removeSemicolons() {
 		def.insert(index, "\n"); // insert a newline
 		// Delete extra spaces - some definitions are preceeded by two spaces, some by one - for tidiness
 		if (def[index + 1] == ' ' && def[index + 2] == ' ') {
+			def.erase(index + 1, 2);
+		}
+		if (def[index + 1] == ' ') {
 			def.erase(index + 1, 1);
 		}
 		index = def.find(";"); // find the next one
@@ -121,5 +150,5 @@ void Word::printDefinition() {
 	string word = capitaliseProperNoun();
 	string def = removeSemicolons();
 
-	cout << word << "\n" << getType() << "\n  " << def << "\n\n";
+	cout << word << "\n" << getType() << "\n" << def << "\n\n";
 }
