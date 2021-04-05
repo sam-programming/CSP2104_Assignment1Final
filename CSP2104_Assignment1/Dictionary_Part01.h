@@ -1,17 +1,14 @@
-/*
-	Defines the Dictionary_Part01 class
-	Loads a .txt file that contains a dictionary, converts its contents to Word objects,
-	and performs various searches on the dictionary.
-
-	Fields:
-		- dictionary : vector<Word>
-	Functions:
-		+ Dictionary_Part01(string) : constructor
-		+ Dictionary_Part01() : constructor
-		+ loadDictionary() : void
-		+ binFindWord() : void
-		+ ThreeZs() : void
-		+ qButNoU() : void
+/*	Written by Samuel Warner
+	5/04/2021
+	The Dictionary_Part01 class has one attribute - a vector of Word objects called dictionary.
+	It has two constructors - one without parameters, and one that takes a string filename and
+	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the 
+	given .txt file and converts its contents to Word objects, which it adds to the vector to 
+	form a complete dictionary.  It also contains a search function - binFindWord(string) - that
+	uses the binary search method to quickly find a target word and call its printDefinition() 
+	method. Then their are two novel methods: one - threeZs- that finds all words that have more
+	than 3 'z's; and another - qButNotU() - that finds all words that contain that char 'q' that 
+	is not immediately followed by the char 'u'.
 */
 
 #pragma once
@@ -30,7 +27,7 @@ public:
 	//constructors
 	Dictionary_Part01(string);
 	Dictionary_Part01();
-	//functions
+	//methods
 	void loadDictionary(string);
 	void binFindWord(string);
 	void threeZs();
@@ -48,9 +45,7 @@ Dictionary_Part01::Dictionary_Part01() {}
 //auxiliary functions
 void Dictionary_Part01::loadDictionary(string filename) {
 	Word entry;
-	string line;
-	string word;
-	string type;
+	string line, word, type;
 
 	cout << "Attempting to read text file... \n";
 	ifstream dict_file(filename);
@@ -60,7 +55,7 @@ void Dictionary_Part01::loadDictionary(string filename) {
 		cout << "Loading " << filename << "...\n";
 		//string delimiter = " ";
 		while (!dict_file.eof()) {
-			//first line contains word and type: post [n_and_v] delimited by " "
+			//first line contains word and type delimited by " "
 			getline(dict_file, line);
 			// word will be from substring 0 to delimiter " ".  find() should find the first instance
 			// of delimiter " "
@@ -72,7 +67,7 @@ void Dictionary_Part01::loadDictionary(string filename) {
 			// delimiter for all definitions is '\n' (automatic for getline), delimiter between definitions is ';'
 			getline(dict_file, line);
 			entry.setDef(line);
-			//new line here to iterate over the blank line
+			//line after definition is blank, so use getline again to iterate over it before exiting the loop
 			getline(dict_file, line);
 			// add the Word object to the word vector
 			dictionary.push_back(entry);
@@ -84,7 +79,9 @@ void Dictionary_Part01::loadDictionary(string filename) {
 	}
 }
 
-//Use a binary search to make finding words much faster
+// Binary search function - compared to linear search, which has a max time complexity of n where
+// n is the number of words in the dictionary, binary search has a max time complexity of log2(n).
+// Average iterations for linear ~7500; average for binary ~ 17
 void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
 	for (int i = 0; i < word.size(); i++)
@@ -116,12 +113,12 @@ void Dictionary_Part01::binFindWord(string word) {
 
 // Iterates through each word in the dictionary and prints the word(s) that contain more than 3 'z's		
 void Dictionary_Part01::threeZs() {
-	vector<Word> results;
+	vector<Word> results; // place the results into a vector 
 	int index;
 	const char CHAR = 'z';
 
 	for (Word wrd : dictionary) {
-		index = wrd.getWord().find(CHAR);
+		index = wrd.getWord().find(CHAR); //if word contains a z
 		if (index != string::npos) {
 			int zs = 0; // keep count of 'z's
 			string word = wrd.getWord();
@@ -151,10 +148,10 @@ void Dictionary_Part01::qButNoU() {
 
 	for (Word wrd : dictionary) {
 		string word = wrd.getWord();
-		int index = word.find(CHAR_1);
-		if (index != string::npos) {
-			if (word[index + 1] != CHAR_2)
-				results.push_back(wrd);
+		int index = word.find(CHAR_1); // find 'q'
+		if (index != string::npos) {   // if 'q' is found
+			if (word[index + 1] != CHAR_2) // is 'u' at the next index?
+				results.push_back(wrd);  // add word to vector
 		}
 	}
 	cout << "Words that contain a 'q' that is not followed by a 'u' are:\n";
