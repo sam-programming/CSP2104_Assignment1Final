@@ -33,11 +33,11 @@ public:
 	//constructors
 	Word();
 	Word(string, string, string);
-	//setters
+	//Methods to set word object attributes
 	void setWord(string);
 	void setType(string);
 	void setDef(string);
-	//getters
+	//Methods to retrieve object attributes
 	string getWord();
 	string getType();
 	string getDef();
@@ -114,11 +114,11 @@ string Word::getDef() {
 	return definition;
 }
 
-//tests if a word is a properNoun.  If it is, capitalise the first letter of the word, as per the brief.
+//tests if a word is of type properNoun.  If it is, capitalise the first letter of the word, as per the brief.
 //proper nouns are by default capitalised, however the are made lowercase in getWord() method above to
-//make comparison with user input straightforward
+//standardise user input for comparison
 string Word::capitaliseProperNoun() {
-	string word = getWord();
+	string word = getWord(); 
 	string type = "Proper Noun (pn.)";
 	if (getType() == type) { // if word type is proper noun
 		for (int i = 0; i < word.size(); i++) { // loop word.size() amount of times
@@ -136,7 +136,7 @@ string Word::removeSemicolons() {
 	int index = def.find(";"); // get index of semicolon
 	while (index != string::npos) { // while a semicolon is not not found
 		def.erase(index, 1);	 // delete semicolon so we don't keep finding it, length is 1
-		def.insert(index, "\n"); // insert a newline
+		def.insert(index, "\n"); // insert a newline at old semicolon index
 		// Delete extra whitespace - some definitions are preceeded by two spaces, some by one
 		if (def[index + 1] == ' ' && def[index + 2] == ' ') {
 			def.erase(index + 1, 2);
