@@ -1,6 +1,6 @@
 /*  
 	Written by Samuel Warner
-	23/02/2021
+	23/03/2021
 	The Word class has three private attributes: a string word, which is the name of the word; a string type,
 	that is the type of word, such as noun, proper noun, verb, etc.; and a string definition - the definition
 	of the word.  
