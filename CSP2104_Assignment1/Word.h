@@ -26,7 +26,7 @@ private:
 	string word;
 	string type;
 	string definition;	
-	//two functions used in-class
+	//two methods used in-class
 	string capitaliseProperNoun();
 	string removeSemicolons();
 public:
@@ -41,7 +41,7 @@ public:
 	string getWord();
 	string getType();
 	string getDef();
-	// function to cout word information
+	// method to cout word information
 	void printDefinition();	
 };
 //Word implementation
