@@ -19,7 +19,7 @@
 #include<vector>
 #include"Word.h"
 using namespace std;
-
+//Declaration section
 class Dictionary_Part01 {
 private:
 	//dynamic STL container for dictionary
@@ -34,7 +34,7 @@ public:
 	void threeZs();
 	void qButNoU();
 };
-//Dictionary_Part01 implementation
+//Implementation section
 
 /*  Function Name: Dictionary_Part01
     Input: String filename	
