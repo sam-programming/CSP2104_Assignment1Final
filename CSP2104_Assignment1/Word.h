@@ -83,6 +83,7 @@ Word::Word(string word, string type, string definition) {
 void Word::setWord(string word) {
 	this->word = word;
 }
+
 /*  Function Name: setType
     Input: string type
     Output: None
@@ -93,6 +94,7 @@ void Word::setWord(string word) {
 void Word::setType(string type) {
 	this->type = type;
 }
+
 /*  Function Name: setDef
     Input: string definition
     Output: None
@@ -103,6 +105,7 @@ void Word::setType(string type) {
 void Word::setDef(string definition) {
 	this->definition = definition;
 }
+
 /*  Function Name: getWord
     Input: None	
     Output: string
@@ -115,6 +118,7 @@ string Word::getWord() {
 	word[0] = tolower(word[0]);
 	return word;
 }
+
 /*  Function Name: getType
     Input: None	
     Output: string
@@ -151,10 +155,11 @@ string Word::getType() {
 		return "Type not found.";
 	}
 }
+
 /*  Function Name: getDef
     Input: None	
     Output: string
-    Summary: getDef
+    Summary: Returns the definition attribute of word
     Written by: Samuel Warner
     Date Created: 12/03/2021 
 */
@@ -162,9 +167,16 @@ string Word::getDef() {
 	return definition;
 }
 
-//tests if a word is of type properNoun.  If it is, capitalise the first letter of the word, as per the brief.
-//proper nouns are by default capitalised, however the are made lowercase in getWord() method above to
-//standardise user input for comparison
+/*  Function Name: capitaliseProperNoun
+    Input: None	
+    Output: string
+    Summary: tests if a word is of type properNoun.  If it is, capitalise the first letter of the word, as per the brief.
+    Proper nouns are by default capitalised, however they are made lowercase in getWord() method above to
+    standardise user input for comparison
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
+
 string Word::capitaliseProperNoun() {
 	string word = getWord(); 
 	string type = "Proper Noun (pn.)";
@@ -176,9 +188,15 @@ string Word::capitaliseProperNoun() {
 	return word;
 }
 
-//the definition attribute may contain many definitions, and these are seperated by semicolons
-//the removeSemicolons() method removes these semicolons, and in their place inserts a newline '\n'
-//it also tidies up some leading whitespace
+/*  Function Name: removeSemicolons()
+    Input: None	
+    Output: string
+    Summary: The definition attribute may contain many definitions, and these are seperated by semicolons
+    the removeSemicolons() method removes these semicolons, and in their place inserts a newline '\n'
+    it also tidies up some leading whitespace.
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 string Word::removeSemicolons() {
 	string def = getDef(); // make copy of definition
 	int index = def.find(";"); // get index of semicolon
@@ -196,11 +214,17 @@ string Word::removeSemicolons() {
 	}
 	return def;
 }
-//calls removeSemicolon and capitaliseProperNoun, and then prints the word, type, and definition
-//getType() is explicitly called here - getDef and getWord are called by the two auxiliary methods
+
+/*  Function Name: printDefinition
+    Input: None	
+    Output: None
+    Summary: Calls removeSemicolon and capitaliseProperNoun, and then prints the word, type, and definition
+    getType() is explicitly called here - getDef and getWord are called by the two auxiliary methods
+    Written by: Samuel Warner
+    Date Created: 13/03/2021 
+*/
 void Word::printDefinition() {
 	string word = capitaliseProperNoun();
 	string def = removeSemicolons();
-
 	cout << word << "\n" << getType() << "\n" << def << "\n\n";
 }
