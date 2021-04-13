@@ -1,6 +1,7 @@
-/*      
+/*      Class: Word
 	Written by: Samuel Warner
 	Date Created: 23/03/2021
+	Summary:
 	The Word class has three private attributes: a string word, which is the name of the word; a string type,
 	that is the type of word, such as noun, proper noun, verb, etc.; and a string definition - the definition
 	of the word.  
@@ -44,45 +45,86 @@ public:
 	// method to cout word information
 	void printDefinition();	
 };
-//Word implementation
+//Implementation section
 
-//default constructor
+/*  Function Name: Word
+    Input: None	
+    Output: None
+    Summary: Constructor to assign default values to word attributes
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 Word::Word() {
 	word = "default word";
 	type = "";
 	definition = "This is a default word";
 }
 
-//constructor with parameters
+/*  Function Name: Word
+    Input: string word, string type, string definition
+    Output: None
+    Summary: Constructor with parameters
+    Written by: Samuel Warner
+    Date Created: 10/03/2021 
+*/
 Word::Word(string word, string type, string definition) {
 	this->word = word;
 	this->type = type;
 	this->definition = definition;
 }
 
-//set object's word attribute to parameter
+/*  Function Name: setWord
+    Input: string Word
+    Output: None
+    Summary: Sets the word attribute of Word
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 void Word::setWord(string word) {
 	this->word = word;
 }
-//set object's type attribute to parameter
+/*  Function Name: setType
+    Input: string type
+    Output: None
+    Summary: Sets the type attribute of Word
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 void Word::setType(string type) {
 	this->type = type;
 }
-//set object's definition attribute to parameter
+/*  Function Name: setDef
+    Input: string definition
+    Output: None
+    Summary: Sets the definition attribute of Word
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 void Word::setDef(string definition) {
 	this->definition = definition;
 }
-
-//return word attribute with first letter lowered to standardise words for comparison with user input
+/*  Function Name: getWord
+    Input: None	
+    Output: string
+    Summary: Returns the word attribute with the first letter in lowercase
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 string Word::getWord() {
 	//use tolower to standardise input (proper nouns are capitalised in the dict file)
 	word[0] = tolower(word[0]);
 	return word;
 }
-//type is set as a shorthand - see const string TYPES[] for examples - but should be displayed expanded
-//get type identifies the shorthand and returns the corresponding expanded type via switch comparison
-string Word::getType() {
-	
+/*  Function Name: getType
+    Input: None	
+    Output: string
+    Summary: Returns the type attribute of word. type is set as a shorthand 
+    but should be displayed expanded get type identifies the shorthand and 
+    returns the corresponding expanded type via switch comparison.
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
+string Word::getType() {	
 	const int SIZE = 8;
 	const string TYPES[SIZE] = { "v", "n", "adv", "adj", "prep", "pn", "n_and_v", "misc" };
 	//using distance() and find() to locate the index of the item in the types[] array
@@ -109,7 +151,13 @@ string Word::getType() {
 		return "Type not found.";
 	}
 }
-//returns the definition
+/*  Function Name: getDef
+    Input: None	
+    Output: string
+    Summary: getDef
+    Written by: Samuel Warner
+    Date Created: 12/03/2021 
+*/
 string Word::getDef() {
 	return definition;
 }
