@@ -1,5 +1,6 @@
-/*	Written by Samuel Warner
-	5/04/2021
+/*	Class: Dictionary_Part01
+	Written by: Samuel Warner
+	Date Created: 5/03/2021
 	The Dictionary_Part01 class has one attribute - a vector of Word objects called dictionary.
 	It has two constructors - one without parameters, and one that takes a string filename and
 	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the 
@@ -33,16 +34,34 @@ public:
 	void threeZs();
 	void qButNoU();
 };
-
-//constructor that calls loadDictionary and takes a filename as a parameter
+/*  Function Name: Dictionary_Part01
+    Input: String filename	
+    Output: None
+    Summary: Constructor overload that calls loadDictionary()
+    Written by: Samuel Warner
+    Date Created: 10/03/2021	
+*/
 Dictionary_Part01::Dictionary_Part01(string filename) {
 	loadDictionary(filename);
 }
 
-//empty constructor
+/*  Function Name: Dictionary_Part01
+    Input: None	
+    Output: None
+    Summary: Empty Constructor
+    Written by: Samuel Warner
+    Date Created: 10/03/2021 
+*/
 Dictionary_Part01::Dictionary_Part01() {}
 
-//auxiliary functions
+/*  Function Name: loadDictionary
+    Input: String filename
+    Output: None
+    Summary: Attempts to read a .txt file. Creates word objects from the lines of the file,
+    	     and pushes them into the vector<word> dictionary.
+    Written by: Samuel Warner
+    Date Created: 10/03/2021
+*/
 void Dictionary_Part01::loadDictionary(string filename) {
 	Word entry;
 	string line, word, type;
@@ -78,10 +97,16 @@ void Dictionary_Part01::loadDictionary(string filename) {
 		cout << "File not found";
 	}
 }
-
-// Binary search function - compared to linear search, which has a max time complexity of n where
-// n is the number of words in the dictionary, binary search has a max time complexity of log2(n).
-// Average iterations for linear ~7500; average for binary ~ 17
+/*  Function Name: binFindWord
+    Input: string word	
+    Output: None
+    Summary: Searches for the target word.  Uses a binary search function.  Compared to a linear
+    search, which has a max time complexity of O(n), binary search has a max time complexity of
+    log2(n). For a dictionary of 106,184 words, that equates to maximum iterations of linear: 106,184
+    (for the last word in the dictionary); maximum iterations for binary: 17.  
+    Written by: Samuel Warner
+    Date Created: 10/03/2021 
+*/
 void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
 	for (int i = 0; i < word.size(); i++)
