@@ -1,6 +1,7 @@
 /*	Class: Dictionary_Part01
 	Written by: Samuel Warner
 	Date Created: 5/03/2021
+	Summary:
 	The Dictionary_Part01 class has one attribute - a vector of Word objects called dictionary.
 	It has two constructors - one without parameters, and one that takes a string filename and
 	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the 
