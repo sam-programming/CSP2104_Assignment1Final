@@ -11,7 +11,6 @@
 	than 3 'z's; and another - qButNotU() - that finds all words that contain that char 'q' that 
 	is not immediately followed by the char 'u'.
 */
-
 #pragma once
 #include<iostream>
 #include<string>
@@ -58,7 +57,7 @@ Dictionary_Part01::Dictionary_Part01() {}
     Input: String filename
     Output: None
     Summary: Attempts to read a .txt file. Creates word objects from the lines of the file,
-    	     and pushes them into the vector<word> dictionary.
+    and pushes them into the vector<word> dictionary.
     Written by: Samuel Warner
     Date Created: 10/03/2021
 */
@@ -97,6 +96,7 @@ void Dictionary_Part01::loadDictionary(string filename) {
 		cout << "File not found";
 	}
 }
+
 /*  Function Name: binFindWord
     Input: string word	
     Output: None
@@ -136,7 +136,14 @@ void Dictionary_Part01::binFindWord(string word) {
 	cout << "Word not found.\n";
 }
 
-// Iterates through each word in the dictionary and prints the word(s) that contain more than 3 'z's		
+/*  Function Name: threeZs
+    Input: None
+    Output: None
+    Summary: Iterates through each word in the dictionary and prints the word(s) that 
+    contain more than 3 'z's.
+    Written by: Samuel Warner
+    Date Created: 10/03/2021
+*/		
 void Dictionary_Part01::threeZs() {
 	vector<Word> results; // place the results into a vector 
 	int index;
@@ -165,7 +172,14 @@ void Dictionary_Part01::threeZs() {
 	return;
 }
 
-// Iterates through each word in the dictionary and prints the word(s) that contain a 'q' but not a a proceeding 'u'
+/*  Function Name: qButNoU
+    Input: None
+    Output: None
+    Summary: Iterates through each word in the dictionary and prints the word(s) that contain a 'q' 
+    but not a a proceeding 'u'.    
+    Written by: Samuel Warner
+    Date Created: 10/03/2021
+*/
 void Dictionary_Part01::qButNoU() {
 	vector<Word> results;
 	const char CHAR_1 = 'q';
@@ -175,7 +189,7 @@ void Dictionary_Part01::qButNoU() {
 		string word = wrd.getWord();
 		int index = word.find(CHAR_1); // find 'q'
 		if (index != string::npos) {   // if 'q' is found
-			if (word[index + 1] != CHAR_2) // is 'u' at the next index?
+			if (word[index + 1] != CHAR_2) // is 'u' at index +1?
 				results.push_back(wrd);  // add word to vector
 		}
 	}
