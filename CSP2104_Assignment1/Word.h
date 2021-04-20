@@ -1,21 +1,18 @@
-/*  
-	Defines the Word class
-	Fields:
-		- word : string
-		- type : string
-		- definition : string
-	Methods:
-		+ Word() : constructor
-		+ Word(string, string, string) : constructor
-		+ setWord(string) : void
-		+ setType(string) : void
-		+setDef(string) : void
-		+ getWord() : string
-		+ getType() : string
-		+ getDef() : string
-		+ capitaliseProperNoun() : void
-		+ removeSemicolons() : void
-		+ printDefinition() : void
+/*      Class: Word
+	Written by: Samuel Warner
+	Date Created: 23/03/2021
+	Summary:
+	The Word class has three private attributes: a string word, which is the name of the word; a string type,
+	that is the type of word, such as noun, proper noun, verb, etc.; and a string definition - the definition
+	of the word.
+	It has a constructor with no parameters that initialises default values for all three attributes, and a
+	constructer with three string parameters corresponding to the three attributes.  It contains getter and
+	setter methods for each attribute - setting and returning the attributes corresponding to the methods.
+	It contains two auxiliary functions - capitaliseProperNoun and removeSemicolons - that are called in the
+	printDefinition() function to capitalise proper nouns if the word type is proper noun, and remove the
+	semicolons from the definition that are seperating multiple definitions within the same word.
+	printDefinition() prints out the word, the type (expanded from shorthand), and the definition, all seperated
+	by '\n'.
 */
 
 #pragma once
@@ -30,66 +27,113 @@ private:
 	string word;
 	string type;
 	string definition;
+	//two methods used in-class
+	string capitaliseProperNoun();
+	string removeSemicolons();
 public:
 	//constructors
 	Word();
 	Word(string, string, string);
-	//getters
+	//Methods to set word object attributes
 	void setWord(string);
 	void setType(string);
 	void setDef(string);
-	//setters
+	//Methods to retrieve object attributes
 	string getWord();
 	string getType();
 	string getDef();
-	//two functions used in-class
-	string capitaliseProperNoun();
-	string removeSemicolons();
-	// function to cout word information
-	void printDefinition();	
+	// method to cout word information
+	void printDefinition();
 };
-//Word implementation
+//Implementation section
 
-//default constructor
+/*  Function Name: Word
+	Input: None
+	Output: None
+	Summary: Constructor to assign default values to word attributes
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 Word::Word() {
 	word = "default word";
 	type = "";
 	definition = "This is a default word";
 }
 
-//constructor with parameters
+/*  Function Name: Word
+	Input: string word, string type, string definition
+	Output: None
+	Summary: Constructor with parameters
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+*/
 Word::Word(string word, string type, string definition) {
 	this->word = word;
 	this->type = type;
 	this->definition = definition;
 }
 
-//setters
+/*  Function Name: setWord
+	Input: string Word
+	Output: None
+	Summary: Sets the word attribute of Word
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 void Word::setWord(string word) {
 	this->word = word;
 }
+
+/*  Function Name: setType
+	Input: string type
+	Output: None
+	Summary: Sets the type attribute of Word
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 void Word::setType(string type) {
 	this->type = type;
 }
+
+/*  Function Name: setDef
+	Input: string definition
+	Output: None
+	Summary: Sets the definition attribute of Word
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 void Word::setDef(string definition) {
 	this->definition = definition;
 }
 
-//getters
+/*  Function Name: getWord
+	Input: None
+	Output: string
+	Summary: Returns the word attribute with the first letter in lowercase
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 string Word::getWord() {
 	//use tolower to standardise input (proper nouns are capitalised in the dict file)
 	word[0] = tolower(word[0]);
 	return word;
 }
 
+/*  Function Name: getType
+	Input: None
+	Output: string
+	Summary: Returns the type attribute of word. type is set as a shorthand
+	but should be displayed expanded get type identifies the shorthand and
+	returns the corresponding expanded type via switch comparison.
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 string Word::getType() {
-	
 	const int SIZE = 8;
 	const string TYPES[SIZE] = { "v", "n", "adv", "adj", "prep", "pn", "n_and_v", "misc" };
 	//using distance() and find() to locate the index of the item in the types[] array
-	int x = distance(TYPES, find(TYPES, TYPES + SIZE, type)); // consider clarifying these vairables
-	//int x = 1;
-	//Use switch to return the appropriate type when required for printDefinition()
+	int x = distance(TYPES, find(TYPES, TYPES + SIZE, type));
+	//Use switch to return the type corresponding to array index
 	switch (x) {
 	case 0:
 		return "Verb (v.)";
@@ -112,11 +156,27 @@ string Word::getType() {
 	}
 }
 
+/*  Function Name: getDef
+	Input: None
+	Output: string
+	Summary: Returns the definition attribute of word
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 string Word::getDef() {
 	return definition;
 }
 
-//auxiliary functions
+/*  Function Name: capitaliseProperNoun
+	Input: None
+	Output: string
+	Summary: tests if a word is of type properNoun.  If it is, capitalise the first letter of the word, as per the brief.
+	Proper nouns are by default capitalised, however they are made lowercase in getWord() method above to
+	standardise user input for comparison
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
+
 string Word::capitaliseProperNoun() {
 	string word = getWord();
 	string type = "Proper Noun (pn.)";
@@ -128,13 +188,22 @@ string Word::capitaliseProperNoun() {
 	return word;
 }
 
+/*  Function Name: removeSemicolons()
+	Input: None
+	Output: string
+	Summary: The definition attribute may contain many definitions, and these are seperated by semicolons
+	the removeSemicolons() method removes these semicolons, and in their place inserts a newline '\n'
+	it also tidies up some leading whitespace.
+	Written by: Samuel Warner
+	Date Created: 12/03/2021
+*/
 string Word::removeSemicolons() {
 	string def = getDef(); // make copy of definition
 	int index = def.find(";"); // get index of semicolon
 	while (index != string::npos) { // while a semicolon is not not found
 		def.erase(index, 1);	 // delete semicolon so we don't keep finding it, length is 1
-		def.insert(index, "\n"); // insert a newline
-		// Delete extra spaces - some definitions are preceeded by two spaces, some by one - for tidiness
+		def.insert(index, "\n"); // insert a newline at old semicolon index
+		// Delete extra whitespace - some definitions are preceeded by two spaces, some by one
 		if (def[index + 1] == ' ' && def[index + 2] == ' ') {
 			def.erase(index + 1, 2);
 		}
@@ -146,9 +215,16 @@ string Word::removeSemicolons() {
 	return def;
 }
 
+/*  Function Name: printDefinition
+	Input: None
+	Output: None
+	Summary: Calls removeSemicolon and capitaliseProperNoun, and then prints the word, type, and definition
+	getType() is explicitly called here - getDef and getWord are called by the two auxiliary methods
+	Written by: Samuel Warner
+	Date Created: 13/03/2021
+*/
 void Word::printDefinition() {
 	string word = capitaliseProperNoun();
 	string def = removeSemicolons();
-
 	cout << word << "\n" << getType() << "\n" << def << "\n\n";
 }
