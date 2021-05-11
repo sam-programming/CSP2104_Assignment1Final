@@ -203,31 +203,75 @@ void Dictionary_Part01::qButNoU() {
 	cout << endl;
 }
 
-
-/*
-	//part 2 - 2 Palindromes
-	vector<Word> palindromes;
-	for each word in dictionary {
-		string reverse;
-		for( i=word.word.size(); i <= 0; i-- ) {
-			reverse += i;
-		}
-		if(word.getWord() == reverse) {
-			palindromes.pushBack(word)
+void Dictionary_Part01::guessingGame() {
+	// this can be permanent in dictionary part 2 and accessed by reference
+	vector<Word> nouns;
+	//fill noun vector
+	for (Word wrd : dictionary) {
+		if (wrd.getType() == "Noun (n.)") {
+			nouns.push_back(wrd);
 		}
 	}
-	
-
-	part 2 | 3 Anagrams
-	
-	void getAnagrams(string usrWord) {
-		usrWord.sortAlphabetically() //not a real function
-		vector<Word> anagrams;
-		for each word in dictionary {
-			if word.getWord().size() == usrWord.size() {
-				string sortedWord = word.getWord().sortAlphabetically();
-				if(sortedWord == usrWord) {
-					anagrams.pushBack(word);
+	bool play_again = true;
+	int score = 0;
+	while (play_again == true) {
+		int guesses = 3;
+		int letters_revealed = 0;
+		string guess;
+		string again;
+		string placeholder;
+		bool correct = false;
+		//generate random number
+		//randomises the seed because why have an actual random number
+		srand(time(0) * 473 - 18); 
+		int random = rand() % nouns.size();
+		cout << "Num: " << random << endl;
+		string word = nouns[random].getWord();
+		cout << "Guess the word!\n";
+		cout << "Definition: ";
+		cout << nouns[random].getDef() << endl;
+		for (int x = 0; x < word.size(); x++) {
+			placeholder.push_back('_');
 		}
+
+		while (guesses != 0) {
+			cout << "You have " << guesses << " remaining guesses...\n";
+			cout << placeholder << " " << placeholder.size() << " letters" << endl;
+			//validate this input
+			getline(cin, guess);
+			if (guess == word) {				
+				correct = true;
+				break;
+			}
+			else {
+				cout << "Incorrect.\n";
+				guesses -= 1;
+				placeholder[letters_revealed] = word[letters_revealed];
+				letters_revealed += 1;
+			}
+		}
+		if (correct == true) {
+			score += 1;
+			cout << "Correct!\n";
+			cout << "Your score is " << score << endl;;
+		}
+		else {
+			if (score > 0) {
+				score -= 1;
+			}
+			cout << "The word is " << word << endl;
+			cout << "Incorrect\n";
+			cout << "Your score is " << score << endl;
+		}
+		cout << "Would you like to play again? 'Y' for Yes, 'N' for No.\n";
+		//validate this input
+		getline(cin, again);
+		if (toupper(again[0]) == 'Y')		{
+			play_again = true;
+		} 
+		else if (toupper(again[0]) == 'N')
+		{ 
+			play_again = false; 
+		}	
 	}
-*/
+}
