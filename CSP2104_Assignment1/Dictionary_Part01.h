@@ -4,65 +4,88 @@
 	Summary:
 	The Dictionary_Part01 class has one attribute - a vector of Word objects called dictionary.
 	It has two constructors - one without parameters, and one that takes a string filename and
-	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the 
-	given .txt file and converts its contents to Word objects, which it adds to the vector to 
+
+	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the
+	given .txt file and converts its contents to Word objects, which it adds to the vector to
 	form a complete dictionary.  It also contains a search function - binFindWord(string) - that
-	uses the binary search method to quickly find a target word and call its printDefinition() 
+	uses the binary search method to quickly find a target word and call its printDefinition()
 	method. Then their are two novel methods: one - threeZs- that finds all words that have more
-	than 3 'z's; and another - qButNotU() - that finds all words that contain that char 'q' that 
+	than 3 'z's; and another - qButNotU() - that finds all words that contain that char 'q' that
 	is not immediately followed by the char 'u'.
 */
 #pragma once
 #include<iostream>
-#include<string>
 #include<fstream>
 #include<vector>
 #include"Word.h"
+
 using namespace std;
+
 //Declaration section
 class Dictionary_Part01 {
-private:
+protected:
 	//dynamic STL container for dictionary
 	vector<Word> dictionary;
-public:	
+public:
 	//constructors
 	Dictionary_Part01(string);
 	Dictionary_Part01();
 	//methods
+
+	void printWordVector(vector<Word>);
+
 	void loadDictionary(string);
 	void binFindWord(string);
 	void threeZs();
 	void qButNoU();
+
+
 };
 //Implementation section
 
 /*  Function Name: Dictionary_Part01
-    Input: String filename	
-    Output: None
-    Summary: Constructor overload that calls loadDictionary()
-    Written by: Samuel Warner
-    Date Created: 10/03/2021	
+	Input: String filename
+	Output: None
+	Summary: Constructor overload that calls loadDictionary()
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+
 */
 Dictionary_Part01::Dictionary_Part01(string filename) {
 	loadDictionary(filename);
 }
 
 /*  Function Name: Dictionary_Part01
-    Input: None	
-    Output: None
-    Summary: Empty Constructor
-    Written by: Samuel Warner
-    Date Created: 10/03/2021 
+
+	Input: None
+	Output: None
+	Summary: Empty Constructor
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
 */
 Dictionary_Part01::Dictionary_Part01() {}
 
+/*  Function Name: printWordVector
+	Input: vector<Word>
+	Output: None
+	Summary: Uses a range loop to iterate through a vector and cout its contents
+	Written by: Samuel Warner
+	Date Created: 20/04/2021
+*/
+void Dictionary_Part01::printWordVector(vector<Word> words) {
+	for (Word wrd : words) {
+		cout << wrd.getWord() << endl;
+	}
+}
+
 /*  Function Name: loadDictionary
-    Input: String filename
-    Output: None
-    Summary: Attempts to read a .txt file. Creates word objects from the lines of the file,
-    and pushes them into the vector<word> dictionary.
-    Written by: Samuel Warner
-    Date Created: 10/03/2021
+	Input: String filename
+	Output: None
+	Summary: Attempts to read a .txt file. Creates word objects from the lines of the file,
+	and pushes them into the vector<word> dictionary.
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::loadDictionary(string filename) {
 	Word entry;
@@ -101,14 +124,16 @@ void Dictionary_Part01::loadDictionary(string filename) {
 }
 
 /*  Function Name: binFindWord
-    Input: string word	
-    Output: None
-    Summary: Searches for the target word.  Uses a binary search function.  Compared to a linear
-    search, which has a max time complexity of O(n), binary search has a max time complexity of
-    log2(n). For a dictionary of 106,184 words, that equates to maximum iterations of linear: 106,184
-    (for the last word in the dictionary); maximum iterations for binary: 17.  
-    Written by: Samuel Warner
-    Date Created: 10/03/2021 
+
+	Input: string word
+	Output: None
+	Summary: Searches for the target word.  Uses a binary search function.  Compared to a linear
+	search, which has a max time complexity of O(n), binary search has a max time complexity of
+	log2(n). For a dictionary of 106,184 words, that equates to maximum iterations of linear: 106,184
+	(for the last word in the dictionary); maximum iterations for binary: 17.
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
@@ -131,22 +156,24 @@ void Dictionary_Part01::binFindWord(string word) {
 			cout << "Word found in " << iterations << " iterations\n\n";
 			return;
 		}
-		else if (comp < 0) 
+		else if (comp < 0)
 			right = mid - 1; //shift the right border to 1 less than mid		
-		else 
+		else
 			left = mid + 1; //shift the left border to 1 more than mid		
 	}
 	cout << "Word not found.\n";
 }
 
 /*  Function Name: threeZs
-    Input: None
-    Output: None
-    Summary: Iterates through each word in the dictionary and prints the word(s) that 
-    contain more than 3 'z's.
-    Written by: Samuel Warner
-    Date Created: 10/03/2021
-*/		
+
+	Input: None
+	Output: None
+	Summary: Iterates through each word in the dictionary and prints the word(s) that
+	contain more than 3 'z's.
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+*/
+
 void Dictionary_Part01::threeZs() {
 	vector<Word> results; // place the results into a vector 
 	int index;
@@ -168,20 +195,20 @@ void Dictionary_Part01::threeZs() {
 		}
 	}
 	cout << "Word(s) that contain more than three 'z''s are:\n";
-	for (Word wrd : results) { //print words in vector			
-		cout << wrd.getWord() << "\n";
-	}
+	printWordVector(results);
 	cout << endl;
 	return;
 }
 
 /*  Function Name: qButNoU
-    Input: None
-    Output: None
-    Summary: Iterates through each word in the dictionary and prints the word(s) that contain a 'q' 
-    but not a a proceeding 'u'.    
-    Written by: Samuel Warner
-    Date Created: 10/03/2021
+
+	Input: None
+	Output: None
+	Summary: Iterates through each word in the dictionary and prints the word(s) that contain a 'q'
+	but not a a proceeding 'u'.
+	Written by: Samuel Warner
+	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::qButNoU() {
 	vector<Word> results;
@@ -197,12 +224,13 @@ void Dictionary_Part01::qButNoU() {
 		}
 	}
 	cout << "Words that contain a 'q' that is not followed by a 'u' are:\n";
-	for (Word wrd : results) {
-		cout << wrd.getWord() << "\n";
-	}
+	printWordVector(results);
 	cout << endl;
 }
 
+
+
+=======
 void Dictionary_Part01::guessingGame() {
 	// this can be permanent in dictionary part 2 and accessed by reference
 	vector<Word> nouns;
@@ -275,3 +303,4 @@ void Dictionary_Part01::guessingGame() {
 		}	
 	}
 }
+
