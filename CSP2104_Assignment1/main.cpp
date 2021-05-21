@@ -3,9 +3,8 @@ using namespace std;
 
 int main() {
 	//Use constructor to call loadDictionary on parameter filename
-02
 	Dictionary_Part02 dict("dictionary2021.txt");
-
+	vector<Word> noun_list;
 
 	const char EXIT = 'x';
 	cout << "Welcome to Dictionary Part 1!\n";
@@ -21,6 +20,7 @@ int main() {
 		cout << "Enter '4' to List all word(s) that are both a Noun and a Verb.\n";
 		cout << "Enter '5' to List all word(s) that are palindromes.\n";
 		cout << "Enter '6' to Find all anagrams of a target word\n";
+		cout << "Enter '7' to play the Word Guessing Game!\n";
 		cout << "Enter " << EXIT << " to exit the program...\n";
 		cin >> response;
 		// To prevent cin buffer issues and unintentional input, take a string as cin and test it for length
@@ -61,6 +61,15 @@ int main() {
 			cout << "Please enter a word...\n";
 			getline(cin, userWrd);
 			dict.getAnagrams(userWrd);
+			break;
+		}
+		case '7':
+		{
+			//We only need to fill this list once per run
+			if (noun_list.empty()) {
+				noun_list = dict.fillNounVector();
+			}
+			dict.guessingGame(noun_list);
 			break;
 		}
 		case EXIT:
