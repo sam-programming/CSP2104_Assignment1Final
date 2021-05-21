@@ -3,7 +3,9 @@ using namespace std;
 
 int main() {
 	//Use constructor to call loadDictionary on parameter filename
+02
 	Dictionary_Part02 dict("dictionary2021.txt");
+
 
 	const char EXIT = 'x';
 	cout << "Welcome to Dictionary Part 1!\n";
@@ -26,7 +28,9 @@ int main() {
 		while (response.length() > 1) { //only allow input length of 1
 			cout << "Invalid input.  Please enter a single value corresponding to a menu item.\n";
 			cin >> response;
+
 		}
+
 		user_comm = tolower(response[0]); // take only the first char of response as input - user is warned
 		cin.ignore(10000, '\n'); // this will clear the cin buffer so that the next getline will work
 

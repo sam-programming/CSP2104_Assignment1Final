@@ -4,13 +4,17 @@
 	Summary:
 	The Word class has three private attributes: a string word, which is the name of the word; a string type,
 	that is the type of word, such as noun, proper noun, verb, etc.; and a string definition - the definition
+
 	of the word.
 	It has a constructor with no parameters that initialises default values for all three attributes, and a
+
 	constructer with three string parameters corresponding to the three attributes.  It contains getter and
 	setter methods for each attribute - setting and returning the attributes corresponding to the methods.
 	It contains two auxiliary functions - capitaliseProperNoun and removeSemicolons - that are called in the
 	printDefinition() function to capitalise proper nouns if the word type is proper noun, and remove the
+
 	semicolons from the definition that are seperating multiple definitions within the same word.
+
 	printDefinition() prints out the word, the type (expanded from shorthand), and the definition, all seperated
 	by '\n'.
 */
@@ -26,7 +30,9 @@ private:
 	//attributes
 	string word;
 	string type;
+
 	string definition;
+
 	//two methods used in-class
 	string capitaliseProperNoun();
 	string removeSemicolons();
@@ -43,16 +49,20 @@ public:
 	string getType();
 	string getDef();
 	// method to cout word information
+
 	void printDefinition();
+
 };
 //Implementation section
 
 /*  Function Name: Word
+
 	Input: None
 	Output: None
 	Summary: Constructor to assign default values to word attributes
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 Word::Word() {
 	word = "default word";
@@ -61,11 +71,13 @@ Word::Word() {
 }
 
 /*  Function Name: Word
+
 	Input: string word, string type, string definition
 	Output: None
 	Summary: Constructor with parameters
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
+
 */
 Word::Word(string word, string type, string definition) {
 	this->word = word;
@@ -74,44 +86,52 @@ Word::Word(string word, string type, string definition) {
 }
 
 /*  Function Name: setWord
+
 	Input: string Word
 	Output: None
 	Summary: Sets the word attribute of Word
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 void Word::setWord(string word) {
 	this->word = word;
 }
 
 /*  Function Name: setType
+
 	Input: string type
 	Output: None
 	Summary: Sets the type attribute of Word
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 void Word::setType(string type) {
 	this->type = type;
 }
 
 /*  Function Name: setDef
+
 	Input: string definition
 	Output: None
 	Summary: Sets the definition attribute of Word
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 void Word::setDef(string definition) {
 	this->definition = definition;
 }
 
 /*  Function Name: getWord
+
 	Input: None
 	Output: string
 	Summary: Returns the word attribute with the first letter in lowercase
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 string Word::getWord() {
 	//use tolower to standardise input (proper nouns are capitalised in the dict file)
@@ -120,6 +140,7 @@ string Word::getWord() {
 }
 
 /*  Function Name: getType
+
 	Input: None
 	Output: string
 	Summary: Returns the type attribute of word. type is set as a shorthand
@@ -133,6 +154,7 @@ string Word::getType() {
 	const string TYPES[SIZE] = { "v", "n", "adv", "adj", "prep", "pn", "n_and_v", "misc" };
 	//using distance() and find() to locate the index of the item in the types[] array
 	int x = distance(TYPES, find(TYPES, TYPES + SIZE, type));
+
 	//Use switch to return the type corresponding to array index
 	switch (x) {
 	case 0:
@@ -157,17 +179,20 @@ string Word::getType() {
 }
 
 /*  Function Name: getDef
+
 	Input: None
 	Output: string
 	Summary: Returns the definition attribute of word
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 string Word::getDef() {
 	return definition;
 }
 
 /*  Function Name: capitaliseProperNoun
+
 	Input: None
 	Output: string
 	Summary: tests if a word is of type properNoun.  If it is, capitalise the first letter of the word, as per the brief.
@@ -175,10 +200,11 @@ string Word::getDef() {
 	standardise user input for comparison
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 
 string Word::capitaliseProperNoun() {
-	string word = getWord();
+	string word = getWord(); 
 	string type = "Proper Noun (pn.)";
 	if (getType() == type) { // if word type is proper noun
 		for (int i = 0; i < word.size(); i++) { // loop word.size() amount of times
@@ -189,6 +215,7 @@ string Word::capitaliseProperNoun() {
 }
 
 /*  Function Name: removeSemicolons()
+
 	Input: None
 	Output: string
 	Summary: The definition attribute may contain many definitions, and these are seperated by semicolons
@@ -196,6 +223,7 @@ string Word::capitaliseProperNoun() {
 	it also tidies up some leading whitespace.
 	Written by: Samuel Warner
 	Date Created: 12/03/2021
+
 */
 string Word::removeSemicolons() {
 	string def = getDef(); // make copy of definition
@@ -216,12 +244,14 @@ string Word::removeSemicolons() {
 }
 
 /*  Function Name: printDefinition
+
 	Input: None
 	Output: None
 	Summary: Calls removeSemicolon and capitaliseProperNoun, and then prints the word, type, and definition
 	getType() is explicitly called here - getDef and getWord are called by the two auxiliary methods
 	Written by: Samuel Warner
 	Date Created: 13/03/2021
+
 */
 void Word::printDefinition() {
 	string word = capitaliseProperNoun();

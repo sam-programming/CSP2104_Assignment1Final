@@ -4,6 +4,7 @@
 	Summary:
 	The Dictionary_Part01 class has one attribute - a vector of Word objects called dictionary.
 	It has two constructors - one without parameters, and one that takes a string filename and
+
 	uses it to call the loadDictionary() method.  The loadDictionary(string) method reads the
 	given .txt file and converts its contents to Word objects, which it adds to the vector to
 	form a complete dictionary.  It also contains a search function - binFindWord(string) - that
@@ -17,6 +18,9 @@
 #include<fstream>
 #include<vector>
 #include"Word.h"
+
+using namespace std;
+
 //Declaration section
 class Dictionary_Part01 {
 protected:
@@ -27,11 +31,14 @@ public:
 	Dictionary_Part01(string);
 	Dictionary_Part01();
 	//methods
+
 	void printWordVector(vector<Word>);
+
 	void loadDictionary(string);
 	void binFindWord(string);
 	void threeZs();
 	void qButNoU();
+
 
 };
 //Implementation section
@@ -42,12 +49,14 @@ public:
 	Summary: Constructor overload that calls loadDictionary()
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
+
 */
 Dictionary_Part01::Dictionary_Part01(string filename) {
 	loadDictionary(filename);
 }
 
 /*  Function Name: Dictionary_Part01
+
 	Input: None
 	Output: None
 	Summary: Empty Constructor
@@ -76,6 +85,7 @@ void Dictionary_Part01::printWordVector(vector<Word> words) {
 	and pushes them into the vector<word> dictionary.
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::loadDictionary(string filename) {
 	Word entry;
@@ -114,6 +124,7 @@ void Dictionary_Part01::loadDictionary(string filename) {
 }
 
 /*  Function Name: binFindWord
+
 	Input: string word
 	Output: None
 	Summary: Searches for the target word.  Uses a binary search function.  Compared to a linear
@@ -122,6 +133,7 @@ void Dictionary_Part01::loadDictionary(string filename) {
 	(for the last word in the dictionary); maximum iterations for binary: 17.
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
@@ -153,6 +165,7 @@ void Dictionary_Part01::binFindWord(string word) {
 }
 
 /*  Function Name: threeZs
+
 	Input: None
 	Output: None
 	Summary: Iterates through each word in the dictionary and prints the word(s) that
@@ -160,6 +173,7 @@ void Dictionary_Part01::binFindWord(string word) {
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
 */
+
 void Dictionary_Part01::threeZs() {
 	vector<Word> results; // place the results into a vector 
 	int index;
@@ -187,12 +201,14 @@ void Dictionary_Part01::threeZs() {
 }
 
 /*  Function Name: qButNoU
+
 	Input: None
 	Output: None
 	Summary: Iterates through each word in the dictionary and prints the word(s) that contain a 'q'
 	but not a a proceeding 'u'.
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
+
 */
 void Dictionary_Part01::qButNoU() {
 	vector<Word> results;
@@ -212,4 +228,79 @@ void Dictionary_Part01::qButNoU() {
 	cout << endl;
 }
 
+
+
+=======
+void Dictionary_Part01::guessingGame() {
+	// this can be permanent in dictionary part 2 and accessed by reference
+	vector<Word> nouns;
+	//fill noun vector
+	for (Word wrd : dictionary) {
+		if (wrd.getType() == "Noun (n.)") {
+			nouns.push_back(wrd);
+		}
+	}
+	bool play_again = true;
+	int score = 0;
+	while (play_again == true) {
+		int guesses = 3;
+		int letters_revealed = 0;
+		string guess;
+		string again;
+		string placeholder;
+		bool correct = false;
+		//generate random number
+		//randomises the seed because why have an actual random number
+		srand(time(0) * 473 - 18); 
+		int random = rand() % nouns.size();
+		cout << "Num: " << random << endl;
+		string word = nouns[random].getWord();
+		cout << "Guess the word!\n";
+		cout << "Definition: ";
+		cout << nouns[random].getDef() << endl;
+		for (int x = 0; x < word.size(); x++) {
+			placeholder.push_back('_');
+		}
+
+		while (guesses != 0) {
+			cout << "You have " << guesses << " remaining guesses...\n";
+			cout << placeholder << " " << placeholder.size() << " letters" << endl;
+			//validate this input
+			getline(cin, guess);
+			if (guess == word) {				
+				correct = true;
+				break;
+			}
+			else {
+				cout << "Incorrect.\n";
+				guesses -= 1;
+				placeholder[letters_revealed] = word[letters_revealed];
+				letters_revealed += 1;
+			}
+		}
+		if (correct == true) {
+			score += 1;
+			cout << "Correct!\n";
+			cout << "Your score is " << score << endl;;
+		}
+		else {
+			if (score > 0) {
+				score -= 1;
+			}
+			cout << "The word is " << word << endl;
+			cout << "Incorrect\n";
+			cout << "Your score is " << score << endl;
+		}
+		cout << "Would you like to play again? 'Y' for Yes, 'N' for No.\n";
+		//validate this input
+		getline(cin, again);
+		if (toupper(again[0]) == 'Y')		{
+			play_again = true;
+		} 
+		else if (toupper(again[0]) == 'N')
+		{ 
+			play_again = false; 
+		}	
+	}
+}
 
