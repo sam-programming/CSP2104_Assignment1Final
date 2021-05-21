@@ -151,6 +151,7 @@ void Dictionary_Part01::binFindWord(string word) {
 		// .compare() method will compare two strings and return 0 if they match,
 		// < 0 if string 1 is alphabetically lower, > 0 if alphabetically higher
 		int comp = word.compare(dictionary[mid].getWord());
+		//NEED TO FIND AND REPLACE THE DASH BECAUSE IT IS FUCKING WITH THE SEACH
 		if (comp == 0) {
 			dictionary[mid].printDefinition();
 			cout << "Word found in " << iterations << " iterations\n\n";
