@@ -200,7 +200,7 @@ void Dictionary_Part02::guessingGame(vector<Word> nouns) {
 	}
 }
 
-
+//comment this
 bool Dictionary_Part02::in_Dictionary(string word) {
 	for (Word wrd : dictionary) {
 		if (wrd.getWord() == word) {
@@ -208,5 +208,4 @@ bool Dictionary_Part02::in_Dictionary(string word) {
 		}
 		return false;
 	}
-
 }
