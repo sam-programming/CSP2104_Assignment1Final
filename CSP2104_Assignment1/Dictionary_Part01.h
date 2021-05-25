@@ -34,7 +34,7 @@ public:
 	void printWordVector(vector<Word>);
 
 	void loadDictionary(string);
-	void binFindWord(string);
+	void findWord(string);
 	void threeZs();
 	void qButNoU();
 	string removeDash(string);//may not need this
@@ -130,50 +130,25 @@ string Dictionary_Part01::removeDash(string word) {
 	}
 	return word;
 }
-/*  Function Name: binFindWord
+/*  Function Name: findWord
 
 	Input: string word
 	Output: None
-	Summary: Searches for the target word.  Uses a binary search function.  Compared to a linear
-	search, which has a max time complexity of O(n), binary search has a max time complexity of
-	log2(n). For a dictionary of 106,184 words, that equates to maximum iterations of linear: 106,184
-	(for the last word in the dictionary); maximum iterations for binary: 17.
+	Summary: Sadly, the binary word find is not working. So this is the basic word find.
 	Written by: Samuel Warner
 	Date Created: 10/03/2021
 
 */
-void Dictionary_Part01::binFindWord(string word) {
+void Dictionary_Part01::findWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
-	for (int i = 0; i < word.size(); i++)
-		word[i] = tolower(word[i]);
-	string message = "";
-	string mid_word;
-	int left = 0;
-	int right = dictionary.size()-1;
-	int mid = 0;
-	int iterations = 0;
-	// maybe a do while = last iteration may not be hitting
-	while (left <= right) { // while doesn't equal right		
-		iterations++;
-		mid = (left + (right-1)) / 2; // find the middle as an integer
-		// .compare() method will compare two strings and return 0 if they match,
-		// < 0 if string 1 is alphabetically lower, > 0 if alphabetically higher
-		mid_word = dictionary[mid].getWord();
-		word = removeDash(word);
-		mid_word = removeDash(mid_word);
-		int comp = word.compare(mid_word);
-		if (comp == 0) {
+	for (Word wrd : dictionary) {
+		if (wrd.getWord() == word) {
 			cout << "Word found." << endl;
-			dictionary[mid].printDefinition();			
-		}
-		else if (comp < 0) {
-			right = mid - 1; //shift the right border to 1 less than mid
-		}
-		else {
-			left = mid + 1; //shift the left border to 1 more than mid	
-		}
+			wrd.printDefinition();
+			return;
+		}		
 	}
-	cout << "Word not found" << endl;
+	cout << "Word not found." << endl;	
 }
 
 
