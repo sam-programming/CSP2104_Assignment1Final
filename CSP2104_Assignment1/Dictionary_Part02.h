@@ -16,6 +16,7 @@ public:
 	// reveal the first letter of the word - and so on.	
 	void guessingGame(vector<Word>);
 	vector<Word> fillNounVector();
+	bool in_Dictionary(string);
 };
 
 //implementation section
@@ -197,4 +198,15 @@ void Dictionary_Part02::guessingGame(vector<Word> nouns) {
 			play_again = false;
 		}
 	}
+}
+
+
+bool Dictionary_Part02::in_Dictionary(string word) {
+	for (Word wrd : dictionary) {
+		if (wrd.getWord() == word) {
+			return true;
+		}
+		return false;
+	}
+
 }

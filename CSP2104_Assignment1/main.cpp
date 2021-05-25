@@ -1,10 +1,12 @@
 #include"Dictionary_Part02.h"
+#include"Tri_Gram.h";
 using namespace std;
 
 int main() {
 	//Use constructor to call loadDictionary on parameter filename
 	Dictionary_Part02 dict("dictionary2021.txt");
 	vector<Word> noun_list;
+	Tri_Gram tri_gram("dictionary2021.txt");
 
 	const char EXIT = 'x';
 	cout << "Welcome to Dictionary Part 1!\n";
@@ -21,6 +23,7 @@ int main() {
 		cout << "Enter '5' to List all word(s) that are palindromes.\n";
 		cout << "Enter '6' to Find all anagrams of a target word\n";
 		cout << "Enter '7' to play the Word Guessing Game!\n";
+		cout << "Enter '8' to play with Tri-Grams\n";
 		cout << "Enter " << EXIT << " to exit the program...\n";
 		cin >> response;
 		// To prevent cin buffer issues and unintentional input, take a string as cin and test it for length
@@ -37,9 +40,10 @@ int main() {
 		case '1':
 		{ //Need scope when intialising a variable in a switch
 			string userWrd = "";
+			bool found;
 			cout << "Please enter a word...\n";
 			getline(cin, userWrd);
-			dict.binFindWord(userWrd); // call binFindWord()
+			dict.binFindWord(userWrd); // call binFindWord()			
 			break;
 		}
 		case '2':
@@ -70,6 +74,10 @@ int main() {
 			}
 			dict.guessingGame(noun_list);
 			break;
+		}
+		case '8': 
+		{
+			tri_gram.generate_Fake_Word(10, dict);
 		}
 		case EXIT:
 			cout << "Exiting...\n";

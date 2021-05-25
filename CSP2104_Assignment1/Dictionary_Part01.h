@@ -146,7 +146,7 @@ void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
 	for (int i = 0; i < word.size(); i++)
 		word[i] = tolower(word[i]);
-	
+	string message = "";
 	string mid_word;
 	int left = 0;
 	int right = dictionary.size()-1;
@@ -163,9 +163,8 @@ void Dictionary_Part01::binFindWord(string word) {
 		mid_word = removeDash(mid_word);
 		int comp = word.compare(mid_word);
 		if (comp == 0) {
-			dictionary[mid].printDefinition();
-			cout << "Word found in " << iterations << " iterations\n\n";
-			return;
+			cout << "Word found." << endl;
+			dictionary[mid].printDefinition();			
 		}
 		else if (comp < 0) {
 			right = mid - 1; //shift the right border to 1 less than mid
@@ -174,7 +173,7 @@ void Dictionary_Part01::binFindWord(string word) {
 			left = mid + 1; //shift the left border to 1 more than mid	
 		}
 	}
-	cout << "Word not found.\n";
+	cout << "Word not found" << endl;
 }
 
 
@@ -241,6 +240,4 @@ void Dictionary_Part01::qButNoU() {
 	printWordVector(results);
 	cout << endl;
 }
-
-
 
