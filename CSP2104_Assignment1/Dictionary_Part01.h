@@ -18,8 +18,7 @@
 #include<fstream>
 #include<vector>
 #include"Word.h"
-
-using namespace std;
+#include <string>
 
 //Declaration section
 class Dictionary_Part01 {
@@ -38,8 +37,7 @@ public:
 	void binFindWord(string);
 	void threeZs();
 	void qButNoU();
-
-
+	string removeDash(string);//may not need this
 };
 //Implementation section
 
@@ -123,6 +121,15 @@ void Dictionary_Part01::loadDictionary(string filename) {
 	}
 }
 
+//Removes dashes from words - they seem to confuse the binary search
+string Dictionary_Part01::removeDash(string word) {
+	
+	int index = word.find("-");
+	if (index != string::npos) {
+		word.erase(index, 1);
+	}
+	return word;
+}
 /*  Function Name: binFindWord
 
 	Input: string word
@@ -139,31 +146,37 @@ void Dictionary_Part01::binFindWord(string word) {
 	// make the word lowercase in case input is funky but spelling is right
 	for (int i = 0; i < word.size(); i++)
 		word[i] = tolower(word[i]);
-
+	
+	string mid_word;
 	int left = 0;
-	int right = dictionary.size() - 1;
+	int right = dictionary.size()-1;
 	int mid = 0;
 	int iterations = 0;
-
-	while (left <= right) { // while doesn't equal right
+	// maybe a do while = last iteration may not be hitting
+	while (left <= right) { // while doesn't equal right		
 		iterations++;
-		mid = floor((left + right) / 2); // find the middle as an integer
+		mid = (left + (right-1)) / 2; // find the middle as an integer
 		// .compare() method will compare two strings and return 0 if they match,
 		// < 0 if string 1 is alphabetically lower, > 0 if alphabetically higher
-		int comp = word.compare(dictionary[mid].getWord());
-		//NEED TO FIND AND REPLACE THE DASH BECAUSE IT IS FUCKING WITH THE SEACH
+		mid_word = dictionary[mid].getWord();
+		word = removeDash(word);
+		mid_word = removeDash(mid_word);
+		int comp = word.compare(mid_word);
 		if (comp == 0) {
 			dictionary[mid].printDefinition();
 			cout << "Word found in " << iterations << " iterations\n\n";
 			return;
 		}
-		else if (comp < 0)
-			right = mid - 1; //shift the right border to 1 less than mid		
-		else
-			left = mid + 1; //shift the left border to 1 more than mid		
+		else if (comp < 0) {
+			right = mid - 1; //shift the right border to 1 less than mid
+		}
+		else {
+			left = mid + 1; //shift the left border to 1 more than mid	
+		}
 	}
 	cout << "Word not found.\n";
 }
+
 
 /*  Function Name: threeZs
 
@@ -230,78 +243,4 @@ void Dictionary_Part01::qButNoU() {
 }
 
 
-
-=======
-void Dictionary_Part01::guessingGame() {
-	// this can be permanent in dictionary part 2 and accessed by reference
-	vector<Word> nouns;
-	//fill noun vector
-	for (Word wrd : dictionary) {
-		if (wrd.getType() == "Noun (n.)") {
-			nouns.push_back(wrd);
-		}
-	}
-	bool play_again = true;
-	int score = 0;
-	while (play_again == true) {
-		int guesses = 3;
-		int letters_revealed = 0;
-		string guess;
-		string again;
-		string placeholder;
-		bool correct = false;
-		//generate random number
-		//randomises the seed because why have an actual random number
-		srand(time(0) * 473 - 18); 
-		int random = rand() % nouns.size();
-		cout << "Num: " << random << endl;
-		string word = nouns[random].getWord();
-		cout << "Guess the word!\n";
-		cout << "Definition: ";
-		cout << nouns[random].getDef() << endl;
-		for (int x = 0; x < word.size(); x++) {
-			placeholder.push_back('_');
-		}
-
-		while (guesses != 0) {
-			cout << "You have " << guesses << " remaining guesses...\n";
-			cout << placeholder << " " << placeholder.size() << " letters" << endl;
-			//validate this input
-			getline(cin, guess);
-			if (guess == word) {				
-				correct = true;
-				break;
-			}
-			else {
-				cout << "Incorrect.\n";
-				guesses -= 1;
-				placeholder[letters_revealed] = word[letters_revealed];
-				letters_revealed += 1;
-			}
-		}
-		if (correct == true) {
-			score += 1;
-			cout << "Correct!\n";
-			cout << "Your score is " << score << endl;;
-		}
-		else {
-			if (score > 0) {
-				score -= 1;
-			}
-			cout << "The word is " << word << endl;
-			cout << "Incorrect\n";
-			cout << "Your score is " << score << endl;
-		}
-		cout << "Would you like to play again? 'Y' for Yes, 'N' for No.\n";
-		//validate this input
-		getline(cin, again);
-		if (toupper(again[0]) == 'Y')		{
-			play_again = true;
-		} 
-		else if (toupper(again[0]) == 'N')
-		{ 
-			play_again = false; 
-		}	
-	}
-}
 

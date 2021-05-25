@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="dictionary2021.txt" />
+    <Text Include="PathOfExile_SpeedRun.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary_Part01.h">
@@ -30,6 +31,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dictionary_Part02.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tri_Gram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,7 +18,7 @@ public:
 	vector<Word> fillNounVector();
 };
 
-//implementation sections
+//implementation section
 /*  Function Name: Dictionary_Part02
 	Input: string filename
 	Output: none
@@ -43,8 +43,6 @@ void Dictionary_Part02::listAllVerbNouns() {
 			verbNouns.push_back(wrd);
 		}
 	}
-
-	//cout << "Size: " << verbNouns.size() << endl;
 	printWordVector(verbNouns);
 }
 
@@ -150,7 +148,7 @@ void Dictionary_Part02::guessingGame(vector<Word> nouns) {
 		//random number 
 		srand(time(0));
 		int random = rand() / double(RAND_MAX) * nouns.size();
-		cout << "Num: " << random << endl;
+		//cout << "Num: " << random << endl;
 		string word = nouns[random].getWord();
 		cout << "Guess the word!\n";
 		cout << "Definition: ";

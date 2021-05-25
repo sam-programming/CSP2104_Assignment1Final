@@ -143,10 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="dictionary2021.txt" />
+    <Text Include="PathOfExile_SpeedRun.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dictionary_Part01.h" />
     <ClInclude Include="Dictionary_Part02.h" />
+    <ClInclude Include="Tri_Gram.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

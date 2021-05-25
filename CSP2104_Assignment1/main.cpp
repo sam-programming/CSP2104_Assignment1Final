@@ -28,7 +28,6 @@ int main() {
 		while (response.length() > 1) { //only allow input length of 1
 			cout << "Invalid input.  Please enter a single value corresponding to a menu item.\n";
 			cin >> response;
-
 		}
 
 		user_comm = tolower(response[0]); // take only the first char of response as input - user is warned
