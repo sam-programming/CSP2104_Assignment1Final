@@ -106,20 +106,16 @@ void Tri_Gram::load_3D_Array(string filename) {
 
 	string line;
 	int index1, index2, index3;
-	cout << "Attempting to read text file... \n";
 	ifstream txt_file(filename);
 
 	//Check if file is readable
 	if (txt_file.is_open()) {
-		cout << "Loading " << filename << "...\n";
+		cout << "Loading Tri-Grams...\n";
 		while (!txt_file.eof()) {
 			getline(txt_file, line);
-			//cout << line << ", length: " << line.length() << endl;
 			//Lets go through the line (-2 so we don't get index range error)
 			if (line.length() != 0) {
 				for (int i = 0; i <= line.length() - 2; i++) {
-
-					//cout << "line: " << line[i] << endl;
 					//if it isn't an allowable value, make it a space
 					index1 = return_Index(tolower(line[i]));
 					index2 = return_Index(tolower(line[i + 1]));
@@ -129,6 +125,7 @@ void Tri_Gram::load_3D_Array(string filename) {
 				}
 			}
 		}
+		cout << "File loaded successfully" << endl;
 	}
 }
 /*  Function Name: complete_Trigram
@@ -206,10 +203,9 @@ void Tri_Gram::complete_Trigram(string filename) {
 	Written by: Samuel Warner
 	Date Created: 24/05/2021
 */
-void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
-	const int NUM_WORDS = 10;
+void Tri_Gram::generate_Fake_Word(int num_words, Dictionary_Part02 dict) {
 	vector<string> fake_words;
-	for (int n = 0; n <= NUM_WORDS; n++) {
+	for (int n = 0; n < num_words; n++) {
 		string fake_word = "";
 		//vector of possible chars to complete trigram
 		vector<pair<char, int>> results;
@@ -219,7 +215,9 @@ void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
 		// "Produces random integer values i, uniformly distributed on the closed interval [a, b], 
 		// that is, distributed according to the discrete probability function."
 		//https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+		// various RNGs
 		uniform_int_distribution<> distrib(1, 26);
+		uniform_int_distribution<> dist_word_length(3, 10);
 		uniform_int_distribution<> dist_0_2(0, 2);
 		uniform_int_distribution<> dist_0_1(0, 1);
 
@@ -230,12 +228,11 @@ void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
 			rand1 = distrib(gen);
 			rand2 = distrib(gen);
 		}
-		cout << tri_gram[0][rand1][rand2] << endl;
 		//push them to the fakeword string
 		fake_word.push_back(to_Char(rand1));
 		fake_word.push_back(to_Char(rand2));
 		int i = 0;
-		while (i < len) {
+		while (i < dist_word_length(gen)) {
 			results.clear();
 			// x and y are the last two values
 			int x = return_Index(fake_word[fake_word.length() - 2]);
@@ -246,16 +243,23 @@ void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
 				int b = tri_gram[x][y][z];
 				results.push_back(make_pair(a, b));
 			}
-			//sort vector
+			//Results is now a sorted key/value vector of the completing chars, 
+			//in order of most likely to least:
+			//'[{'e' : 1300},
+			//  {'r' : 400},
+			//  {   ...   }]
 			sort(results.begin(), results.end(), sort_By_Val);
-			//just take the a if there are no matches
-			if ((results[0].second == 0) && () {
+			//just take the a if there are no results or only one result
+			// results[x].second returns the value
+			if ((results[0].second == 0) || (results[1].second == 0)) {
 				rand1 = 1;
-			}//if 
+				fake_word.push_back(results[rand1].first
+			}//if there are only two results
 			else if (results[2].second == 0) {
 				rand1 = dist_0_1(gen);
+				fake_word.push_back(results[rand1].first);
 			}
-			else {
+			else {// there are three or more results so we choose between them
 				//get random num between 0 and 2	
 				rand1 = dist_0_2(gen);
 				fake_word.push_back(results[rand1].first);
@@ -263,7 +267,7 @@ void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
 				i++;
 			}
 		}
-		cout << fake_word << endl;
+		// check if the word is in the dictionary.  Discard if it is
 		if (dict.in_Dictionary(fake_word)) {
 			cout << "Word in dictionary" << endl;
 			n--;
@@ -273,6 +277,12 @@ void Tri_Gram::generate_Fake_Word(int len, Dictionary_Part02 dict) {
 			fake_words.push_back(fake_word);
 		}
 	}
+	cout << endl;
+	//print all the words
+	for (string fkword : fake_words) {
+		cout << fkword << endl;
+	}
+	cout << endl;
 }
 
 
