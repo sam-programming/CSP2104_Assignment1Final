@@ -253,7 +253,7 @@ void Tri_Gram::generate_Fake_Word(int num_words, Dictionary_Part02 dict) {
 			// results[x].second returns the value
 			if ((results[0].second == 0) || (results[1].second == 0)) {
 				rand1 = 1;
-				fake_word.push_back(results[rand1].first
+				fake_word.push_back(results[rand1].first);
 			}//if there are only two results
 			else if (results[2].second == 0) {
 				rand1 = dist_0_1(gen);
